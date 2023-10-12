@@ -7,6 +7,7 @@
 const char *ssid = "ssid";
 const char *passw = "passw";
 int ledPin = D2;
+int sensorLedPin = D1;
 int buttonPin = D7;
 int buttonState = 0;
 float tem, hum;
@@ -35,7 +36,9 @@ void setup()
   Serial.begin(9600);
 
   pinMode(ledPin, OUTPUT);
+  pinMode(sensorLedPin, OUTPUT);
   digitalWrite(ledPin, LOW);
+  digitalWrite(sensorLedPin, LOW);
 
   pinMode(buttonPin, INPUT);
   sensor.begin();
@@ -60,7 +63,7 @@ void setup()
 
 void loop()
 {
-
+  digitalWrite(sensorLedPin, LOW);
   buttonState = digitalRead(buttonPin);
   if (buttonState == HIGH)
   {
@@ -87,7 +90,9 @@ void loop()
 
   server.handleClient();
   Serial.println(String(getTemperature()) + "/" + String(getHumidity()));
+
   delay(2000);
+  digitalWrite(sensorLedPin, HIGH);
 }
 
 float getTemperature()
